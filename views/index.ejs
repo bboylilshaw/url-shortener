@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
+</head>
+<body>
+<div class="well col-lg-8"><h1>URL Shortener</h1></div>
+<div class="container col-lg-8">
+    <form action="/shorten" method="post">
+        <div class="col-lg-5"><input type="text" class="form-control"/></div>
+        <div class="col-lg-3">
+            <button type="submit" class="btn btn-primary">Shorten URL</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
