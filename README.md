@@ -1,4 +1,4 @@
 url-shortener
 =============
 
-simple quoter tool based on Node.js
+simple url shortener tool based on Node.js
