@@ -7,24 +7,27 @@ exports.index = function (req, res) {
 
 exports.shorten = function (req, res) {
 
-//    var originalUrl = req.body.originalUrl;
-//    var shortUrl = originalUrl + '_short';
-//
-//    var url = new URLModel({
-//        originalUrl: originalUrl,
-//        shortUrl: shortUrl,
-//        generateDate: new Date()
-//    });
-//
-//    url.save(function (err, url, numberAffected) {
-//        console.log("url.save() invoked");
-//        if (!err) {
-//            console.dir(url);
-//            res.redirect('/');
-//        } else {
-//            console.dir(err);
-//            // Error handling
-//            res.redirect('/error');
-//        }
-//    });
+    var originalUrl = req.body.originalUrl;
+    var shortUrl = originalUrl + '_short';
+    console.log(originalUrl);
+    console.log(shortUrl);
+    console.log(new Date());
+
+    var url = new URLModel({
+        originalUrl: originalUrl,
+        shortUrl: shortUrl,
+        generateDate: new Date()
+    });
+
+    url.save(function (err, url, numberAffected) {
+        console.log("url.save() invoked");
+        if (!err) {
+            console.dir(url);
+            res.redirect('/');
+        } else {
+            console.dir(err);
+            // Error handling
+            res.redirect('/error');
+        }
+    });
 };
