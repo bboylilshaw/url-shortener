@@ -1,12 +1,11 @@
 /**
  * Module dependencies.
  */
-
+var db = require('./util/db');
 var express = require('express');
 var routes = require('./routes');
 var http = require('http');
 var path = require('path');
-var db = require('./util/db');
 
 var app = express();
 

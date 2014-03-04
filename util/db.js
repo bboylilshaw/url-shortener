@@ -2,7 +2,8 @@
 var mongoose = require('mongoose');
 
 // Build the connection string
-var dbURI = 'mongodb://admin:password@ds037737.mongolab.com:37737/urlstore';
+//var dbURI = 'mongodb://admin:password@ds037737.mongolab.com:37737/urlstore';
+var dbURI = 'mongodb://localhost/test';
 
 // Create the database connection
 mongoose.connect(dbURI);
@@ -30,4 +31,5 @@ process.on('SIGINT', function () {
         process.exit(0);
     });
 });
+
 require('../model/url');
