@@ -4,21 +4,58 @@
     <title><%= title %></title>
     <link rel="stylesheet" href="/stylesheets/style.css"/>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"/>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#submitBtn').on('click', function () {
+                $('#error').hide();
+                $('#success').hide();
+                var url = $('#url').val();
+                $('#url').val('');
+                if (!/^(http|ftp|https).*/.test(url)) {
+                    $("#error").html("网址必须以http/https/ftp开头");
+                    $('#error').show(0.5);
+                    return;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/shorten',
+                    data: {'url': url},
+                    success: function (resp) {
+                        console.log(resp);
+                        console.dir(resp);
+                        console.log(resp.status === 'ok');
+                        if (resp.status === 'ok') {
+                            console.log('Success');
+                            $("#success").html(resp.data);
+                            $('#success').show(0.5);
+                        } else {
+                            console.log('Fail');
+                            $("#error").html('Fail to obtain the short url.');
+                            $('#error').show(0.5);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </head>
 <body>
-<div class="well col-lg-8">
+<div class="well">
     <h1>URL Shortener</h1>
 </div>
-<div class="col-lg-8">
-    <form action="/shorten" method="post">
+<div class="col-lg-10">
+    <form onsubmit="return false;">
         <div class="col-lg-8">
-            <input type="text" name="originalUrl" class="form-control"/>
+            <input id="url" type="text" class="form-control" placeholder="Please input the url here."/>
         </div>
         <div class="col-lg-4">
-        <button type="submit" class="btn btn-primary">Shorten URL</button>
+            <button id="submitBtn" type="submit" class="btn btn-primary">Shorten URL</button>
             <button type="reset" class="btn btn-default">Reset</button>
         </div>
     </form>
 </div>
+<div id="error" class="alert alert-danger col-lg-10" style="display:none"></div>
+<div id="success" class="alert alert-success col-lg-10" style="display:none"></div>
 </body>
 </html>

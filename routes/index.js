@@ -7,7 +7,7 @@ exports.index = function (req, res) {
 
 exports.shorten = function (req, res) {
 
-    var originalUrl = req.body.originalUrl;
+    var originalUrl = req.body.url;
     var shortUrl = originalUrl + '_short';
     console.log(originalUrl);
     console.log(shortUrl);
@@ -23,11 +23,12 @@ exports.shorten = function (req, res) {
         console.log("url.save() invoked");
         if (!err) {
             console.dir(url);
-            res.redirect('/');
+            var resp = {'status': 'ok', 'data': shortUrl};
+            res.send(resp);
         } else {
             console.dir(err);
             // Error handling
-            res.redirect('/error');
+            res.send({'status': 'error'});
         }
     });
 };
