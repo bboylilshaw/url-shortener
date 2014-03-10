@@ -8,27 +8,31 @@ exports.index = function (req, res) {
 exports.shorten = function (req, res) {
 
     var originalUrl = req.body.url;
-    var shortUrl = originalUrl + '_short';
-    console.log(originalUrl);
-    console.log(shortUrl);
-    console.log(new Date());
+    var shortUrl = originalUrl + '_short'; //fake short url for now
 
     var url = new URLModel({
         originalUrl: originalUrl,
-        shortUrl: shortUrl,
-        generateDate: new Date()
+        shortUrl: shortUrl
     });
 
-    url.save(function (err, url, numberAffected) {
-        console.log("url.save() invoked");
+    URLModel.find({ originalUrl: originalUrl }, function (err, docs) {
         if (!err) {
-            console.dir(url);
-            var resp = {'status': 'ok', 'data': shortUrl};
-            res.send(resp);
-        } else {
-            console.dir(err);
-            // Error handling
-            res.send({'status': 'error'});
+            if (docs) { //already exist short url for the original url
+                console.log('>>find() method invoked...')
+                res.send({'status': 'ok', 'data': shortUrl});
+            } else {
+                url.save(function (err, url, numberAffected) {
+                    console.log('>>url.save() method invoked...');
+                    if (!err) {
+                        console.dir(url);
+                        res.send({'status': 'ok', 'data': shortUrl});
+                    } else {
+                        console.dir(err);
+                        // Error handling
+                        res.send({'status': 'error'});
+                    }
+                });
+            }
         }
     });
 };
